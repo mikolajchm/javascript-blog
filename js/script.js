@@ -47,6 +47,8 @@ function generateTitleLinks() {
     link.addEventListener('click', titleClickHandler);
   }
 
+}
+
   const titleClickHandler = function (event) {
     const clickedElement = this;
     console.log('Link was clicked!');
@@ -77,6 +79,5 @@ function generateTitleLinks() {
     /* add class 'active' to the correct article */
     targetArticle.classList.add('active');
   };
-}
 
 generateTitleLinks();
