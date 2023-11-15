@@ -1,7 +1,7 @@
 const optArticleSelector = '.post',
       optTitleSelector = '.post-title',
       optTitleListSelector = '.titles',
-      optArticleTagsSelector = '.post-tags.list';
+      optArticleTagsSelector = '.post-tags.list',
       optArticleAuthorSelector = '.post-author';
 
   
@@ -117,9 +117,9 @@ function generateTags(){
     }
 
     /* insert HTML of all the links into the tags wrapper */
-    tagWrapper.innerHTML += html;
-
-  }
+    if (tagWrapper) {
+      tagWrapper.innerHTML += html;
+    } 
   /* END LOOP: for every article: */
 }
 
@@ -242,7 +242,6 @@ function authorClickHandler(event) {
   generateTitleLinks('[data-author="' + author + '"]');
   });
 }
-
 // Usunięcie przykładowej zawartości listy autorów z kodu HTML
 const authorList = document.querySelector('.authors');
 authorList.innerHTML = '';
@@ -251,4 +250,7 @@ authorList.innerHTML = '';
 addClickListenersToAuthors();
 
 // Generowanie autorów
+
 generateAuthors();
+
+}
