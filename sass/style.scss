@@ -125,3 +125,26 @@ body {
   color: purple;
   display: inline;
 }
+
+.tag-size-1 {
+  font-size: 80%;
+  color: blue;
+}
+
+
+.tag-size-3 {
+  font-size: 100%;
+  color: red;
+}
+
+
+.tag-size-5 {
+  font-size: 120%;
+  color: orange;
+}
+
+.tags.list li {
+  display: inline-block;
+  margin-right: 10px; 
+}
+
