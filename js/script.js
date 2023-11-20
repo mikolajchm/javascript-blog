@@ -293,11 +293,7 @@ function authorClickHandler(event) {
   generateTitleLinks('[data-author="' + author + '"]');
 });
 }
-
-// Usunięcie przykładowej zawartości listy autorów z kodu HTML
 const authorList = document.querySelector('.authors');
 authorList.innerHTML = '';
-// Dodanie event listenerów do autorów
 addClickListenersToAuthors();
-// Generowanie autorów
 generateAuthors();
