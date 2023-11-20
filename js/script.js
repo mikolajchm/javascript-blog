@@ -250,9 +250,6 @@ function generateAuthors() {
     /* END LOOP: for every article: */
   }
 
-  generateAuthors();
-
-  
   /* [NEW] find list of authors in the right column */
   const authorsList = document.querySelector(optAuthorsListSelector);
 
@@ -281,6 +278,7 @@ function generateAuthors() {
   }
 }
 
+generateAuthors();
 
 
 function authorClickHandler(event) {
