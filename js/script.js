@@ -183,36 +183,6 @@ function tagClickHandler(event) {
   generateTitleLinks('[data-tags~="' + tag + '"]');
 }
 
-function calculateAuthorParams(authors) {
-  let params = {
-    max: 0,
-    min: 4,
-  };
-
-  for (let author in authors) {
-    if (authors[author] > params.max) {
-      params.max = authors[author];
-    }
-
-    if (authors[author] < params.min) {
-      params.min = authors[author];
-    }
-  }
-
-  return params;
-}
-
-
-function calculateAuthorClass(count, params) {
-  const normalizedCount = count - params.min;
-  const normalizedMax = params.max - params.min;
-  const percentage = normalizedCount / normalizedMax;
-  const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1);
-
-  return optCloudClassPrefix + classNumber;
-}
-
-
 function generateAuthors() {
   /* [NEW] create a new variable allAuthors with an empty object */
   let allAuthors = {};
@@ -220,64 +190,33 @@ function generateAuthors() {
   const articles = document.querySelectorAll(optArticleSelector);
   /* START LOOP: for every article: */
   for (let article of articles) {
+
     /* find authors wrapper */
     const authorWrapper = article.querySelector(optArticleAuthorSelector);
     /* make html variable with an empty string */
     let html = '';
     /* get authors from the data-author attribute */
-    const articleAuthors = article.getAttribute('data-author');
+    const author = article.getAttribute('data-author');
     /* split authors into an array */
-    const articleAuthorsArray = articleAuthors.split(' ');
     /* START LOOP: for each author */
-    for (let author of articleAuthorsArray) {
       /* generate HTML of the link */
-      const linkHTML = '<li><a href="#author-' + author + '" class="' + calculateAuthorClass(allAuthors[author], authorsParams) + '">' + author + ' (' + (allAuthors[author] ? allAuthors[author].count : 0) + ')</a></li>';
-      /* add generated code to the html variable */
-      html += linkHTML;
-      /* [NEW] check if this author is NOT already in allAuthors */
-      if (!allAuthors[author]) {
-        /* [NEW] add author to allAuthors object */
-        allAuthors[author] = { count: 1 };
-      } else {
-        allAuthors[author].count++;
-      }
+    const linkHTML = '<li><a href="#author-' + author + '">' + author + '</a></li>';
+    /* add generated code to the html variable */
+    html += linkHTML;
+    /* [NEW] check if this author is NOT already in allAuthors */
+    if (!allAuthors[author]) {
+      /* [NEW] add author to allAuthors object */
+      allAuthors[author] = { count: 1 };
+    } else {
+      allAuthors[author].count++;
+    }
       /* END LOOP: for each author */
-    }
+  
     /* insert HTML of all the links into the authors wrapper */
-    if (authorWrapper) {
-      authorWrapper.innerHTML += html;
-    }
+    authorWrapper.innerHTML = html;
     /* END LOOP: for every article: */
   }
-
-  /* [NEW] find list of authors in the right column */
-  const authorsList = document.querySelector(optAuthorsListSelector);
-
-  const authorsParams = calculateAuthorParams(allAuthors);
-  console.log('authorsParams:', authorsParams);
-
-  /* [NEW] create a variable for all links HTML code */
-  let allAuthorsHTML = '';
-
-  /* [NEW] START LOOP: for each author in allAuthors: */
-  for (let author in allAuthors) {
-    const authorLinkHTML = '<li><a href="#author-' + author + '" class="' + calculateAuthorClass(allAuthors[author].count, authorsParams) + '">' + author + ' (' + allAuthors[author].count + ')</a></li>';
-    console.log('authorLinkHTML:', authorLinkHTML);
-    /* [NEW] generate code of a link and add it to allAuthorsHTML */
-    allAuthorsHTML += authorLinkHTML;
-  }
-  /* [NEW] END LOOP: for each author in allAuthors: */
-
-  /*[NEW] add HTML from allAuthorsHTML to authorsList */
-  authorsList.innerHTML = allAuthorsHTML;
-
-  /* add event listeners to author links */
-  const authorLinks = document.querySelectorAll('a[href^="#author-"]');
-  for (let authorLink of authorLinks) {
-    authorLink.addEventListener('click', authorClickHandler);
-  }
 }
-
 generateAuthors();
 
 
